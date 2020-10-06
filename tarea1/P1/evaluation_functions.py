@@ -101,15 +101,43 @@ if __name__ == '__main__':
         "Rosenbrock": 2.048
     }
 
-    print("Función,Dimensión,Semilla,f(x),Tiempo")
+    table = open(sys.argv[4], "w")
+
+    r2instance = []
+    results = []
+
+    table.write("Función,Dimensión,Semilla,f(x),Tiempo\n")
     for dim in dimensions:
         for i in range(0, repetitions):
             np.random.seed()
             seed = np.random.get_state()[1][0]
 
             xx = np.random.uniform(-ranges[funct], ranges[funct], dim)
+            if dim == 2:
+                r2instance = xx
 
             (fx, ex_time) = test(funct, xx)
 
+            results.append(fx)
 
-            print("{},{},{},{},{}".format(funct, dim, seed, fx, ex_time))
+            table.write("{},{},{},{},{}\n".format(funct, dim, seed, fx, ex_time))
+
+    table.write("\n\nFunción,Número de repeticiones,Dimensión,Mejor valor,Valor promedio,Peor valor,Ejemplo en R2\n")
+    i = 0
+    for dim in dimensions:
+        l = i * repetitions
+        h = (i + 1) * repetitions
+        i = i + 1
+
+        rowresults = results[l:h]
+        lowest = min(rowresults)
+        average = np.average(rowresults)
+        highest = max(rowresults)
+
+        if dim != 2:
+            r2instance = ""
+
+        table.write("{},{},{},{},{},{},{}\n".format(funct, repetitions, dim,
+            lowest, average, highest, r2instance))
+
+    table.close()
