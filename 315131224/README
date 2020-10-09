@@ -1,0 +1,26 @@
+El archivo makefile permite ejecutar los programas de manera
+sencilla:
+
+Para el problema 1, pueden ejecutarse las funciones por
+separado con los targets correspondientes
+(sphere, ackley, griewank, tenth, rast, y rosen) o pueden
+ejecutarse todos al mismo tiempo con el target p1all.
+
+Para el problema 2, se pueden resolver las instancias
+del TSP por separado con los targets correspondientes
+(solvepbl, solvexqf y solvexqg), o pueden ejecutarse
+todos al mismo tiempo con el target p2all.
+
+Finalmente, para el problema 3, pueden generarse instancias aleatorias
+para cada especificacion con los targets correspondientes
+(genI1, genI2, genI3, genI4, genI5 y genI6) o generarse todos
+con genAll; y también resolverse con los targets correspondientes
+(solve1, solve2, solve3, solve4, solve5 y solve6) o resolverse
+todos con solveAll.
+
+En la carpeta de ejecuciones se guardan las salidas
+de dichos programas, mientras que en la carpeta de ejecuciones finales,
+se guardan las ejecuciones que consideré para el reporte.
+
+En los archivos de las ejecuciones se encuentran las tablas
+donde se calculan los promedios, mejores soluciones y peores soluciones.

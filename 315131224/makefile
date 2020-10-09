@@ -71,6 +71,8 @@ solvexqf:
 solvexqg:
 	python3 $(SRC_DIR)/$(P2_DIR)/$(P2_FILE) $(DATA_DIR)/xqg237.tsp $(REP_P2) $(XLS_DIR)/xqg237.xls
 
+p2all: solvepbl solvexqf solvexqg
+
 # -------------------- P3 -------------------- #
 
 genI1:
@@ -97,26 +99,30 @@ genI6:
 	$(CC) $(CFLAGS) -o generate_3sat $(SRC_DIR)/$(P3_DIR)/instance_3sat.c $(SRC_DIR)/$(P3_DIR)/generate_3sat.c
 	./generate_3sat $(I6_NUM_VARS) $(I6_NUM_CLAUSES) > $(DATA_DIR)/$(I6_FILE).txt
 
-genSol1:
+genAll: genI1 genI2 genI3 genI4 genI5 genI6
+
+solve1:
 	$(CC) $(CFLAGS) -o generate_3sat_sol $(SRC_DIR)/$(P3_DIR)/instance_3sat.c $(SRC_DIR)/$(P3_DIR)/utils.c $(SRC_DIR)/$(P3_DIR)/sol_3sat.c $(SRC_DIR)/$(P3_DIR)/test_sol_3sat.c
 	./generate_3sat_sol $(DATA_DIR)/$(I1_FILE).txt 0 5 > $(XLS_DIR)/$(I1_FILE).xls
 
-genSol2:
+solve2:
 	$(CC) $(CFLAGS) -o generate_3sat_sol $(SRC_DIR)/$(P3_DIR)/instance_3sat.c $(SRC_DIR)/$(P3_DIR)/utils.c $(SRC_DIR)/$(P3_DIR)/sol_3sat.c $(SRC_DIR)/$(P3_DIR)/test_sol_3sat.c
 	./generate_3sat_sol $(DATA_DIR)/$(I2_FILE).txt 0 5 > $(XLS_DIR)/$(I2_FILE).xls
 
-genSol3:
+solve3:
 	$(CC) $(CFLAGS) -o generate_3sat_sol $(SRC_DIR)/$(P3_DIR)/instance_3sat.c $(SRC_DIR)/$(P3_DIR)/utils.c $(SRC_DIR)/$(P3_DIR)/sol_3sat.c $(SRC_DIR)/$(P3_DIR)/test_sol_3sat.c
 	./generate_3sat_sol $(DATA_DIR)/$(I3_FILE).txt 0 5 > $(XLS_DIR)/$(I3_FILE).xls
 
-genSol4:
+solve4:
 	$(CC) $(CFLAGS) -o generate_3sat_sol $(SRC_DIR)/$(P3_DIR)/instance_3sat.c $(SRC_DIR)/$(P3_DIR)/utils.c $(SRC_DIR)/$(P3_DIR)/sol_3sat.c $(SRC_DIR)/$(P3_DIR)/test_sol_3sat.c
 	./generate_3sat_sol $(DATA_DIR)/$(I4_FILE).txt 0 5 > $(XLS_DIR)/$(I4_FILE).xls
 
-genSol5:
+solve5:
 	$(CC) $(CFLAGS) -o generate_3sat_sol $(SRC_DIR)/$(P3_DIR)/instance_3sat.c $(SRC_DIR)/$(P3_DIR)/utils.c $(SRC_DIR)/$(P3_DIR)/sol_3sat.c $(SRC_DIR)/$(P3_DIR)/test_sol_3sat.c
 	./generate_3sat_sol $(DATA_DIR)/$(I5_FILE).txt 0 5 > $(XLS_DIR)/$(I5_FILE).xls
 
-genSol6:
+solve6:
 	$(CC) $(CFLAGS) -o generate_3sat_sol $(SRC_DIR)/$(P3_DIR)/instance_3sat.c $(SRC_DIR)/$(P3_DIR)/utils.c $(SRC_DIR)/$(P3_DIR)/sol_3sat.c $(SRC_DIR)/$(P3_DIR)/test_sol_3sat.c
 	./generate_3sat_sol $(DATA_DIR)/$(I6_FILE).txt 0 5 > $(XLS_DIR)/$(I6_FILE).xls
+
+solveAll: solve1 solve2 solve3 solve4 solve5 solve6
