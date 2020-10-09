@@ -1,0 +1,10 @@
+Instancia,Variables,Clausulas,Semilla,f(x)
+data/instance2.txt,10,5,1602212107,3
+data/instance2.txt,10,5,638645204,4
+data/instance2.txt,10,5,1076041961,5
+data/instance2.txt,10,5,1095397230,5
+data/instance2.txt,10,5,1002028703,5
+
+
+Instancia,Variables,Clausulas,Mejor valor,Valor promedio,Peor valor,Ejemplo
+data/instance2.txt,10,5,5,4,3,[0, 0, 0, ..., 1, 1, 1]

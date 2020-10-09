@@ -1,0 +1,10 @@
+Instancia,Variables,Clausulas,Semilla,f(x)
+data/instance3.txt,25,30,1602212108,24
+data/instance3.txt,25,30,1183334340,23
+data/instance3.txt,25,30,991520171,24
+data/instance3.txt,25,30,1954957355,28
+data/instance3.txt,25,30,1255895687,27
+
+
+Instancia,Variables,Clausulas,Mejor valor,Valor promedio,Peor valor,Ejemplo
+data/instance3.txt,25,30,28,25,23,[0, 0, 1, ..., 1, 1, 1]

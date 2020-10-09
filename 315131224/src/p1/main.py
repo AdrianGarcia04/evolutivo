@@ -109,7 +109,7 @@ if __name__ == '__main__':
     table.write("Función,Dimensión,Semilla,f(x),Tiempo\n")
     for dim in dimensions:
         for i in range(0, repetitions):
-            np.random.seed()
+            np.random.seed(np.random.get_state()[1][np.random.randint(low=len(np.random.get_state()[1]))])
             seed = np.random.get_state()[1][0]
 
             xx = np.random.uniform(-ranges[funct], ranges[funct], dim)
