@@ -106,12 +106,6 @@ class Solution:
         self.evaluate()
         return np.sum(self.evaluation)
 
-    def print_genes(self, genes, to_print=True):
-        strSol = str(genes[0:5]) + "..." \
-        + str(genes[(self.dim - 5):(self.dim)])
-        if to_print: print(strSol)
-        return strSol
-
     def any_change_neighbourhood(self):
         combinations = []
         for i in range(self.dim):
@@ -130,9 +124,22 @@ class Solution:
         (x, y) = coords
         self.eval_swap(x, y, apply=True)
 
+    def print_genes(self, genes, to_print=True):
+        str_sol = "["
+
+        for i in range(5):
+            str_sol += "{}, ".format(genes[i])
+        str_sol += "..., "
+
+        for i in range(5):
+            str_sol += "{}, ".format(genes[i - 5])
+        str_sol = str_sol[:-2] + "]"
+        if to_print: print(str_sol)
+        return str_sol
+
     def __str__(self):
-        return "Eval: " + str(self.eval) \
-        + ", perm: " + self.print_genes(self.perm, to_print=False)
+        return "Evaluation: " + str(self.eval) \
+        + "\nPermutation: " + self.print_genes(self.perm, to_print=False)
 
     def __lt__(self, other):
         return self.eval < other.eval
