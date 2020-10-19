@@ -1,0 +1,12 @@
+El archivo makefile permite ejecutar los programas de manera
+sencilla:
+
+Para el problema 4, pueden ejecutarse las búsquedas por escalada
+independientes con los targets correspondientes (solvepbl, solvexqf, solvexqg),
+o pueden ejecutarse todos al mismo tiempo con el target solveTSP.
+Por otro lado, pueden guardarse en tablas los resultados de cada
+problema con los targets correspondientes (solvepbl, solvexqf, solvexqg),
+o pueden guardarse todos al mismo tiempo con el target saveTSP.
+
+En la carpeta de ejecuciones se guardan las salidas
+de dichos programas.

@@ -59,7 +59,8 @@ if __name__ == '__main__':
     file = sys.argv[1]
     max_iterations = int(sys.argv[2])
     temperature = int(sys.argv[3])
-    neighbourhood_type = sys.argv[4]
+    to_table = int(sys.argv[4])
+    neighbourhood_type = sys.argv[5]
     if neighbourhood_type == "anychange": neighbourhood_type = 1
     elif neighbourhood_type == "adjacent": neighbourhood_type = 2
 
@@ -69,4 +70,13 @@ if __name__ == '__main__':
     # Start Stochastic Search
     (best_solution, best_evaluation) = stochastic_search(instance, neighbourhood_type)
 
-    print(best_solution)
+    if to_table:
+        to_table_file = sys.argv[6]
+        table_file = open(to_table_file, "a")
+
+        table_file.write("{},{},{},{},{}\n".format(file, max_iterations, temperature, \
+            best_evaluation, best_solution.pretty_perm()))
+
+        table_file.close()
+    else:
+        print(best_solution)

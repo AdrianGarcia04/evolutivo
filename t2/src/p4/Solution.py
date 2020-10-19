@@ -124,22 +124,21 @@ class Solution:
         (x, y) = coords
         self.eval_swap(x, y, apply=True)
 
-    def print_genes(self, genes, to_print=True):
+    def pretty_perm(self):
         str_sol = "["
 
         for i in range(5):
-            str_sol += "{}, ".format(genes[i])
+            str_sol += "{}, ".format(self.perm[i])
         str_sol += "..., "
 
         for i in range(5):
-            str_sol += "{}, ".format(genes[i - 5])
+            str_sol += "{}, ".format(self.perm[i - 5])
         str_sol = str_sol[:-2] + "]"
-        if to_print: print(str_sol)
         return str_sol
 
     def __str__(self):
         return "Evaluation: " + str(self.eval) \
-        + "\nPermutation: " + self.print_genes(self.perm, to_print=False)
+        + "\nPermutation: " + self.pretty_perm()
 
     def __lt__(self, other):
         return self.eval < other.eval
