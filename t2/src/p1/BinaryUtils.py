@@ -39,5 +39,29 @@ def generate_neighbourhood(solution):
         neighbours[i] = [1 - bit if pos == i else bit for (pos, bit) in enumerate(solution)]
     return neighbours
 
-def real_to_bin_interval(real, m, cot_inf, cot_sup):
-    return None
+def real_to_bin_interval(real, n_bits, cot_inf, cot_sup):
+    if real < cot_inf: return fill_zeros(n_bits, [0])
+    if real > cot_sup: return natural_to_bin(2 ** n_bits - 1)
+    delta = (cot_sup - cot_inf) / (2 ** n_bits - 1)
+    tmp = cot_inf - real
+    tmp = tmp / delta
+    tmp = abs(int(tmp))
+    return fill_zeros(n_bits, natural_to_bin(tmp))
+
+def real_to_gray_interval(real, n_bits, cot_inf, cot_sup):
+    return bin_to_gray(real_to_bin_interval(real, n_bits, cot_inf, cot_sup))
+
+def bin_interval_to_real(data_bin, n_bits, cot_inf, cot_sup):
+    delta = (cot_sup - cot_inf) / (2 ** n_bits - 1)
+    natural = bin_to_natural(data_bin)
+    tmp = delta * natural
+    tmp = cot_inf + tmp
+    return tmp
+
+def gray_interval_to_real(data_gray, n_bits, cot_inf, cot_sup):
+    return bin_interval_to_real(gray_to_bin(data_gray), n_bits, cot_inf, cot_sup)
+
+def fill_zeros(n_bits, data):
+    while len(data) < n_bits:
+        data.insert(0, 0)
+    return data
