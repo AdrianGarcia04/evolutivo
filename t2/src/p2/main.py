@@ -27,12 +27,15 @@ def stochastic_search(instance, neighbourhood_type=2):
         # We obtain the current solution neighbourhood
         neighbourhood = gen_neighbourhood(current_solution, type=neighbourhood_type)
 
+        # Select one random swap
         random_swap_index = np.random.choice(len(neighbourhood))
         random_swap = neighbourhood[random_swap_index]
 
+        # Create the random neighbour applying the swap
         random_neighbour = copy.deepcopy(current_solution)
         random_neighbour.apply_swap(random_swap)
 
+        # We evaluate the neighbour
         random_neighbour_eval = random_neighbour.get_eval()
 
         # If we find a better solution, take it
@@ -48,6 +51,7 @@ def stochastic_search(instance, neighbourhood_type=2):
             acceptance_probability = np.exp(-(random_neighbour_eval - current_evaluation) / temperature)
             probability = np.random.uniform() * 100
 
+            # Accepting
             if probability < acceptance_probability:
                 current_solution = random_neighbour
 
@@ -70,6 +74,7 @@ if __name__ == '__main__':
     # Start Stochastic Search
     (best_solution, best_evaluation) = stochastic_search(instance, neighbourhood_type)
 
+    # If the user specifies to write the info to the table
     if to_table:
         to_table_file = sys.argv[6]
         table_file = open(to_table_file, "a")
@@ -78,5 +83,6 @@ if __name__ == '__main__':
             best_evaluation, best_solution.pretty_perm()))
 
         table_file.close()
+    # Just print the solution
     else:
         print(best_solution)

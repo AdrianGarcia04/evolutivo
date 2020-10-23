@@ -6,32 +6,52 @@ RES_DIR=ejecuciones
 # -------------------- P1 defs -------------------- #
 M_BITS=20
 DIM=10
-P1_DIR=p2
+P1_DIR=p1
+CODIFICATION=Gray
+# CODIFICATION=Bin
 
 # -------------------- P2 defs -------------------- #
-P2_DIR=p4
+P2_DIR=p2
 MAX_ITER=100
 TEMPERATURE=1000
 N_TYPE=adjacent
 
 # -------------------- P1 -------------------- #
 solveSph:
-	python3 $(SRC_DIR)/$(P1_DIR)/main.py Sphere $(DIM) $(M_BITS)
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Sphere $(DIM) $(M_BITS) $(CODIFICATION) 0
+
+saveSph:
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Sphere $(DIM) $(M_BITS) $(CODIFICATION) 1 $(RES_DIR)/Functions.xls
 
 solveAck:
-	python3 $(SRC_DIR)/$(P1_DIR)/main.py Ackley $(DIM) $(M_BITS)
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Ackley $(DIM) $(M_BITS) $(CODIFICATION) 0
+
+saveAck:
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Ackley $(DIM) $(M_BITS) $(CODIFICATION) 1 $(RES_DIR)/Functions.xls
 
 solveGrie:
-	python3 $(SRC_DIR)/$(P1_DIR)/main.py Griewank $(DIM) $(M_BITS)
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Griewank $(DIM) $(M_BITS) $(CODIFICATION) 0
+
+saveGrie:
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Griewank $(DIM) $(M_BITS) $(CODIFICATION) 1 $(RES_DIR)/Functions.xls
 
 solveTenth:
-	python3 $(SRC_DIR)/$(P1_DIR)/main.py TenthPower $(DIM) $(M_BITS)
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py TenthPower $(DIM) $(M_BITS) $(CODIFICATION) 0
+
+saveTenth:
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py TenthPower $(DIM) $(M_BITS) $(CODIFICATION) 1 $(RES_DIR)/Functions.xls
 
 solveRast:
-	python3 $(SRC_DIR)/$(P1_DIR)/main.py Rastrigin $(DIM) $(M_BITS)
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Rastrigin $(DIM) $(M_BITS) $(CODIFICATION) 0
+
+saveRast:
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Rastrigin $(DIM) $(M_BITS) $(CODIFICATION) 1 $(RES_DIR)/Functions.xls
 
 solveRosen:
-	python3 $(SRC_DIR)/$(P1_DIR)/main.py Rosenbrock $(DIM) $(M_BITS)
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Rosenbrock $(DIM) $(M_BITS) $(CODIFICATION) 0
+
+saveRosen:
+	python3 $(SRC_DIR)/$(P1_DIR)/main.py Rosenbrock $(DIM) $(M_BITS) $(CODIFICATION) 1 $(RES_DIR)/Functions.xls
 
 # -------------------- P2 -------------------- #
 solvepbl:

@@ -10,14 +10,17 @@ class Solution:
         self.perm = np.array(range(self.dim))
         self.eval = float("inf")
 
+        # If the perm exists, take it
         if perm is not None:
             self.perm = np.array(perm)
+        # Else, if specified, create random solution
         elif perm_random:
             self.rand_sol()
 
         self.distances = instance.distances
         self.evaluation = np.zeros(self.dim, dtype="float64")
 
+        # If specified, evaluate solution
         if to_eval:
             self.evaluate()
 
@@ -30,9 +33,11 @@ class Solution:
     def evaluate(self):
         self.eval = 0
         nodes = self.instance.nodes
+        # Calc distance between nodes
         for i in range(self.dim - 1):
             self.evaluation[i] = self.distances[self.perm[i]][self.perm[i + 1]]
             self.eval += self.evaluation[i]
+        # Calc distance between first and last node
         self.evaluation[self.dim - 1] = self.distances[self.perm[0]][self.perm[self.dim - 1]]
         self.eval += self.evaluation[self.dim - 1]
         return self.eval
@@ -108,6 +113,7 @@ class Solution:
 
     def any_change_neighbourhood(self):
         combinations = []
+        # Add all posible swaps 2 by 2
         for i in range(self.dim):
             for j in range(i + 1, self.dim):
                 combinations.append((i, j))
@@ -115,6 +121,7 @@ class Solution:
 
     def adjacent_neighbourhood(self):
         combinations = []
+        # Add swaps between neighbours
         for i in range(self.dim - 1):
             combinations.append((i, i + 1))
         combinations.append((0, self.dim - 1))

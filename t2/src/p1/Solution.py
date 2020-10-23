@@ -47,11 +47,41 @@ class Solution:
     def set_vect(self, vect):
         self.vect = vect
 
-    def eval(self, vect):
+    def eval(self, vect, time=False):
         xx = []
         for coord in vect:
             if self.as_gray:
                 xx.append(gray_interval_to_real(coord, self.m_bits, -self.bound, self.bound))
             else:
                 xx.append(bin_interval_to_real(coord, self.m_bits, -self.bound, self.bound))
-        return eval_funct(xx, self.funct)
+        self.as_reals = xx
+        return eval_funct(xx, self.funct, time)
+
+    def pretty_values(self):
+        str_sol = "["
+
+        for i in range(2):
+            str_sol += "{}, ".format(self.as_reals[i])
+        str_sol += "..., "
+
+        for i in range(2):
+            str_sol += "{}, ".format(self.as_reals[i - 2])
+        str_sol = str_sol[:-2] + "]"
+        return str_sol
+
+    def values(self):
+        str_sol = "["
+
+        for value in self.as_reals:
+            str_sol += "{}, ".format(value)
+
+        str_sol = str_sol[:-2] + "]"
+        return str_sol
+
+    def get_values(self):
+        return self.pretty_values() if self.dim > 5 else self.values()
+
+    def __str__(self):
+        (fx, time) = self.eval(self.vect, True)
+        values = self.get_values()
+        return "Eval: {} Time {}\n Values {}".format(fx, time, values)

@@ -62,8 +62,8 @@ ranges = {
     "Rosenbrock": 2.048
 }
 
-def eval_funct(xx, funct, time=False):
-    if time:
+def eval_funct(xx, funct, with_time=False):
+    if with_time:
         t1 = time.time()
 
     if funct == 'Sphere':
@@ -80,7 +80,7 @@ def eval_funct(xx, funct, time=False):
         fx = rosenbrock(xx)
 
     ex_time = None
-    if time:
+    if with_time:
         t2 = time.time()
         ex_time = (t2 - t1) * 1000.0
 
