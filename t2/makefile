@@ -4,7 +4,7 @@ SRC_DIR=src
 RES_DIR=ejecuciones
 
 # -------------------- P1 defs -------------------- #
-M_BITS=20
+M_BITS=30
 DIM=10
 P1_DIR=p1
 CODIFICATION=Gray
@@ -12,8 +12,8 @@ CODIFICATION=Gray
 
 # -------------------- P2 defs -------------------- #
 P2_DIR=p2
-MAX_ITER=100
-TEMPERATURE=1000
+MAX_ITER=500
+TEMPERATURE=10000
 N_TYPE=adjacent
 
 # -------------------- P1 -------------------- #
