@@ -16,7 +16,7 @@ def main(args):
     }
 
     # Reading file
-    file = "../../data/" + args.file + ".tsp"
+    file = "../data/" + args.file + ".tsp"
     instance = Instance.read_file(file)
 
     tup = (args.temp, args.cooling, constants, args.neightype, args.maxiter)
