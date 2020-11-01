@@ -35,6 +35,7 @@ class SimulatedAnnealing:
         # Get a random solution for the instance
         current_solution = self.gen_random_solution()
         current_evaluation = current_solution.get_eval()
+        self.max_eval = current_evaluation
 
         # Set the best evaluation to infinite and solution as the actual one
         best_evaluation = float("inf")
@@ -87,5 +88,5 @@ class SimulatedAnnealing:
             print("Percentage {}%".format(iterations * 100 // self.max_iterations), end="\r")
 
         log.stop()
-
+        log.set_intervals((0, self.max_iterations), (best_evaluation, self.max_eval))
         return (best_solution, best_evaluation, log)

@@ -16,7 +16,8 @@ def main(args):
     }
 
     # Reading file
-    instance = Instance.read_file(args.file)
+    file = "../../data/" + args.file + ".tsp"
+    instance = Instance.read_file(file)
 
     tup = (args.temp, args.cooling, constants, args.neightype, args.maxiter)
 
@@ -28,12 +29,13 @@ def main(args):
     if args.save:
         table_file = open(args.output, "a")
 
-        table_file.write("{},{},{},{},{}\n".format(args.file, args.maxiter, args.temp, \
+        table_file.write("{},{},{},{},{}\n".format(file, args.maxiter, args.temp, \
             best_evaluation, best_solution.pretty_perm()))
 
         table_file.close()
     # Just print the solution
     else:
+        log.set_title("Función de evaluación de la instancia " + args.file)
         log.plot()
 
 main(arguments.defineArgs())
