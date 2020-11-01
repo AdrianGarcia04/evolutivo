@@ -22,7 +22,7 @@ def main(args):
 
     # Start Stochastic Search
     sim_annealing = SimulatedAnnealing(instance, tup)
-    (best_solution, best_evaluation) = sim_annealing.search()
+    (best_solution, best_evaluation, log) = sim_annealing.search()
 
     # If the user specifies to write the info to the table
     if args.save:
@@ -34,6 +34,6 @@ def main(args):
         table_file.close()
     # Just print the solution
     else:
-        print(best_solution)
+        log.plot()
 
 main(arguments.defineArgs())

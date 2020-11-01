@@ -2,6 +2,7 @@ import numpy as np
 import copy
 from Instance import Instance
 from Solution import Solution
+from TSPLog import TSPLog
 
 class SimulatedAnnealing:
 
@@ -31,7 +32,7 @@ class SimulatedAnnealing:
     def search(self):
         # Set iterations
         iterations = 0
-        # Get a random solution for the instance and its evaluation
+        # Get a random solution for the instance
         current_solution = self.gen_random_solution()
         current_evaluation = current_solution.get_eval()
 
@@ -41,7 +42,10 @@ class SimulatedAnnealing:
 
         tmp = self.initial_tmp
 
+        log = TSPLog(current_evaluation)
+
         while iterations < self.max_iterations:
+            current_evaluation = current_solution.get_eval()
             # We obtain the current solution neighbourhood
             neighbourhood = self.gen_neighbourhood(current_solution, self.neighbourhood_type)
 
@@ -59,22 +63,29 @@ class SimulatedAnnealing:
             # If we find a better solution, take it
             if random_neighbour_eval < current_evaluation:
                 current_solution = random_neighbour
+                log.new_current(random_neighbour, random_neighbour_eval)
 
                 # If it is the best so far, save it
                 if random_neighbour_eval < best_evaluation:
                     best_evaluation = random_neighbour_eval
                     best_solution = random_neighbour
+                    log.new_best(random_neighbour, random_neighbour_eval)
             else:
                 # Accept solution with this probability
                 acceptance_probability = np.exp(-(random_neighbour_eval - current_evaluation) / tmp)
-                probability = np.random.uniform() * 100
+                probability = np.random.uniform()
 
                 # Accepting
                 if probability < acceptance_probability:
                     current_solution = random_neighbour
+                    log.new_current(random_neighbour, random_neighbour_eval)
 
             tmp = self.alpha(tmp)
             iterations += 1
             self.constants["k"] = iterations
+            log.tick()
+            print("Percentage {}%".format(iterations * 100 // self.max_iterations), end="\r")
 
-        return (best_solution, best_evaluation)
+        log.stop()
+
+        return (best_solution, best_evaluation, log)

@@ -4,7 +4,7 @@ def defineArgs():
     parser = argparse.ArgumentParser(description='Simulated Annealing')
 
     parser.add_argument('-f', '--file', help='input file', type=str,
-        default='data/pbl395.tsp')
+        default='../../data/pbl395.tsp')
 
     parser.add_argument('-mi', '--maxiter', help='number of max iterations',
         type=int, default=1000)
@@ -16,7 +16,7 @@ def defineArgs():
         action='store_true')
 
     parser.add_argument('-o', '--output', help='output file', type=str,
-        default='ejecuciones/TSP.xls')
+        default='../../ejecuciones/TSP.xls')
 
     parser.add_argument('-n', '--neightype',
         help='specifies which neighbourhood generation method to use',
@@ -29,7 +29,7 @@ def defineArgs():
         type=float, default=0.9)
 
     parser.add_argument('-b', '--beta', help='specifies beta value',
-        type=float, default=0.001)
+        type=float, default=0.0001)
 
     parser.add_argument('-e', '--eta', help='specifies eta value',
         type=float, default=0.8)
