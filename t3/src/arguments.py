@@ -16,7 +16,7 @@ def defineArgs():
         action='store_true')
 
     parser.add_argument('-o', '--output', help='output file', type=str,
-        default='tsp.xls')
+        default='results.txt')
 
     parser.add_argument('-n', '--neightype',
         help='specifies which neighbourhood generation method to use',

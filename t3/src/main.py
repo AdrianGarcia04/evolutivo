@@ -2,6 +2,7 @@ import sys
 import copy
 import numpy as np
 import arguments
+from TSPLog import TSPLog
 from Instance import Instance
 from Solution import Solution
 from SimulatedAnnealing import SimulatedAnnealing
@@ -19,23 +20,47 @@ def main(args):
     file = "../data/" + args.file + ".tsp"
     instance = Instance.read_file(file)
 
-    tup = (args.temp, args.cooling, constants, args.neightype, args.maxiter)
+    # Create Log
+    log = TSPLog()
+    log.add_dictionaries(["eval-vs-iter", "best-vs-iter", "act-vs-ini", "best-vs-act"])
 
     # Start Stochastic Search
-    sim_annealing = SimulatedAnnealing(instance, tup)
-    (best_solution, best_evaluation, log) = sim_annealing.search()
+    simargs = {
+        "inittmp": args.temp,
+        "ctype": args.cooling,
+        "cts": constants,
+        "ntype": args.neightype,
+        "miter": args.maxiter
+    }
+    SimulatedAnnealing(instance, log, **simargs).search()
 
-    # If the user specifies to write the info to the table
-    if args.save:
-        table_file = open(args.output, "a")
+    # Define graphs data
+    f1args = {
+        "title": "Función de evaluación " + args.file,
+        "xlabel": "Número de iteraciones",
+        "ylabel": "Función de evaluación",
+        "id": "F1"
+    }
 
-        table_file.write("{},{},{},{},{}\n".format(file, args.maxiter, args.temp, \
-            best_evaluation, best_solution.pretty_perm()))
+    f2args = {
+        "title": "Solución inicial vs solución actual " + args.file,
+        "xlabel": "Número de iteraciones",
+        "ylabel": "Diferencia",
+        "id": "F2"
+    }
 
-        table_file.close()
-    # Just print the solution
-    else:
-        log.set_title("Función de evaluación de la instancia " + args.file)
-        log.plot()
+    f3args = {
+        "title": "Mejor solución vs solución actual " + args.file,
+        "xlabel": "Número de iteraciones",
+        "ylabel": "Diferencia",
+        "id": "F3"
+    }
+
+    log.gen_graphs(["eval-vs-iter", "best-vs-iter"], **f1args) \
+    .gen_graphs(["act-vs-ini"], **f2args) \
+    .gen_graphs(["best-vs-act"], **f3args)
+
+    if args.save: log.save_graphs("../ejecuciones/" + args.file)
+    else: log.show()
 
 main(arguments.defineArgs())

@@ -6,14 +6,14 @@ from TSPLog import TSPLog
 
 class SimulatedAnnealing:
 
-    def __init__(self, instance, args):
-        (initial_tmp, cooling_type, constants, neighbourhood_type, max_iter) = args
+    def __init__(self, instance, log, inittmp=0, ctype="", cts=None, ntype="", miter=0):
         self.instance = instance
-        self.initial_tmp = initial_tmp
-        self.cooling_type = cooling_type
-        self.constants = constants
-        self.neighbourhood_type = neighbourhood_type
-        self.max_iterations = max_iter
+        self.log = log
+        self.initial_tmp = inittmp
+        self.cooling_type = ctype
+        self.constants = cts
+        self.neighbourhood_type = ntype
+        self.max_iterations = miter
 
     def gen_random_solution(self):
         # Creating a solution with a random permutation
@@ -30,20 +30,17 @@ class SimulatedAnnealing:
         elif self.cooling_type == "geo": return self.constants["alpha"] * t_k
 
     def search(self):
-        # Set iterations
         iterations = 0
         # Get a random solution for the instance
         current_solution = self.gen_random_solution()
         current_evaluation = current_solution.get_eval()
-        self.max_eval = current_evaluation
+        initial_eval = current_evaluation
 
         # Set the best evaluation to infinite and solution as the actual one
         best_evaluation = float("inf")
         best_solution = current_solution
 
         tmp = self.initial_tmp
-
-        log = TSPLog(current_evaluation)
 
         while iterations < self.max_iterations:
             current_evaluation = current_solution.get_eval()
@@ -64,13 +61,13 @@ class SimulatedAnnealing:
             # If we find a better solution, take it
             if random_neighbour_eval < current_evaluation:
                 current_solution = random_neighbour
-                log.new_current(random_neighbour, random_neighbour_eval)
+                self.log.add_data("eval-vs-iter", (iterations, random_neighbour_eval))
 
                 # If it is the best so far, save it
                 if random_neighbour_eval < best_evaluation:
                     best_evaluation = random_neighbour_eval
                     best_solution = random_neighbour
-                    log.new_best(random_neighbour, random_neighbour_eval)
+                    self.log.add_data("best-vs-iter", (iterations, random_neighbour_eval))
             else:
                 # Accept solution with this probability
                 acceptance_probability = np.exp(-(random_neighbour_eval - current_evaluation) / tmp)
@@ -79,14 +76,14 @@ class SimulatedAnnealing:
                 # Accepting
                 if probability < acceptance_probability:
                     current_solution = random_neighbour
-                    log.new_current(random_neighbour, random_neighbour_eval)
+                    self.log.add_data("eval-vs-iter", (iterations, random_neighbour_eval))
 
             tmp = self.alpha(tmp)
             iterations += 1
             self.constants["k"] = iterations
-            log.tick()
+            self.log.add_data("act-vs-ini", (iterations, initial_eval - random_neighbour_eval))
+            self.log.add_data("best-vs-act", (iterations, current_evaluation - best_evaluation))
             print("Percentage {}%".format(iterations * 100 // self.max_iterations), end="\r")
 
-        log.stop()
-        log.set_intervals((0, self.max_iterations), (best_evaluation, self.max_eval))
-        return (best_solution, best_evaluation, log)
+        self.log.add_data("best-vs-iter", (self.max_iterations, best_evaluation))
+        return (best_solution, best_evaluation)
