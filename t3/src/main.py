@@ -39,28 +39,28 @@ def main(args):
         "title": "Función de evaluación " + args.file,
         "xlabel": "Número de iteraciones",
         "ylabel": "Función de evaluación",
-        "id": "F1"
+        "id": "EvalFunctEvol"
     }
 
     f2args = {
         "title": "Solución inicial vs solución actual " + args.file,
         "xlabel": "Número de iteraciones",
         "ylabel": "Diferencia",
-        "id": "F2"
+        "id": "SolInivsActSol"
     }
 
     f3args = {
         "title": "Mejor solución vs solución actual " + args.file,
         "xlabel": "Número de iteraciones",
         "ylabel": "Diferencia",
-        "id": "F3"
+        "id": "BestSolvsActSol"
     }
 
     log.gen_graphs(["eval-vs-iter", "best-vs-iter"], **f1args) \
     .gen_graphs(["act-vs-ini"], **f2args) \
     .gen_graphs(["best-vs-act"], **f3args)
 
-    if args.save: log.save_graphs("../ejecuciones/" + args.file)
+    if args.save: log.save("../ejecuciones/" + args.file, args.file)
     else: log.show()
 
 main(arguments.defineArgs())

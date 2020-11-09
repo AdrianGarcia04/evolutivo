@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
@@ -9,6 +8,25 @@ class TSPLog:
     def __init__(self):
         self.data = {}
         self.ids = []
+        self.initial_tmp = 0
+        self.final_tmp = 0
+        self.best_eval = 0
+        self.time = 0
+
+    def set_initial_temp(self, tmp):
+        self.initial_tmp = tmp
+        return self
+
+    def set_final_temp(self, tmp):
+        self.final_tmp = tmp
+        return self
+
+    def set_best_eval(self, best):
+        self.best_eval = best
+        return self
+
+    def set_time(self, time):
+        self.time = time
 
     def add_dict(self, name):
         self.data[name] = ([], [])
@@ -36,13 +54,13 @@ class TSPLog:
             (x, y) = self.data[name]
             plt.plot(x, y)
         self.ids.append(id)
-        
+
         return self
 
     def show(self):
         plt.show()
 
-    def save_graphs(self, path):
+    def save(self, path, instance):
         figs = [plt.figure(n) for n in plt.get_fignums()]
         i = 0
         for fig in figs:
@@ -55,5 +73,6 @@ class TSPLog:
             fig.savefig("{}/{}-{}".format(path, name, date_time))
             i += 1
 
-        # results = open(path + "results.txt", "a")
-        # results.write(f'{filename + date_time},{best_eval}')
+        results = open(path + "/results.txt", "a")
+        results.write(f'{instance},{self.best_eval},{self.initial_tmp},{self.final_tmp},{self.time}')
+        results.close()

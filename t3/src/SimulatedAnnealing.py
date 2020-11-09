@@ -1,5 +1,6 @@
 import numpy as np
 import copy
+import time
 from Instance import Instance
 from Solution import Solution
 from TSPLog import TSPLog
@@ -30,6 +31,8 @@ class SimulatedAnnealing:
         elif self.cooling_type == "geo": return self.constants["alpha"] * t_k
 
     def search(self):
+        t1 = time.time()
+
         iterations = 0
         # Get a random solution for the instance
         current_solution = self.gen_random_solution()
@@ -41,6 +44,7 @@ class SimulatedAnnealing:
         best_solution = current_solution
 
         tmp = self.initial_tmp
+        self.log.set_initial_temp(tmp)
 
         while iterations < self.max_iterations:
             current_evaluation = current_solution.get_eval()
@@ -85,5 +89,7 @@ class SimulatedAnnealing:
             self.log.add_data("best-vs-act", (iterations, current_evaluation - best_evaluation))
             print("Percentage {}%".format(iterations * 100 // self.max_iterations), end="\r")
 
+        t2 = time.time()
+        self.log.set_final_temp(tmp).set_best_eval(best_evaluation).set_time(t2 - t1)
         self.log.add_data("best-vs-iter", (self.max_iterations, best_evaluation))
         return (best_solution, best_evaluation)
