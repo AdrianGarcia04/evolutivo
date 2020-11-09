@@ -74,5 +74,5 @@ class TSPLog:
             i += 1
 
         results = open(path + "/results.txt", "a")
-        results.write(f'{instance},{self.best_eval},{self.initial_tmp},{self.final_tmp},{self.time}')
+        results.write(f'{instance},{self.best_eval},{self.initial_tmp},{self.final_tmp},{self.time}\n')
         results.close()
