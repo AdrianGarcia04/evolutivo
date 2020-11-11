@@ -60,7 +60,7 @@ def main(args):
     .gen_graphs(["act-vs-ini"], **f2args) \
     .gen_graphs(["best-vs-act"], **f3args)
 
-    if args.save: log.save("../ejecuciones/" + args.file, args.file)
+    if args.save: log.save("../ejecuciones/" + args.file, args.file, args.graphs)
     else: log.show()
 
 main(arguments.defineArgs())

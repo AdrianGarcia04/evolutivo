@@ -10,7 +10,8 @@ if __name__ == '__main__':
         "best": "float",
         "init_temp": "float",
         "final_temp": "float",
-        "ex_time": "float"
+        "ex_time": "float",
+        "iters": "int",
     }
 
     dirs = ["a280", "ch130", "pbl395", "xqf131", "xqg237"]
@@ -35,7 +36,7 @@ if __name__ == '__main__':
             poss.append(p + 1)
 
         plt.xticks(ticks=poss, labels=keys)
+        plt.xlabel("Temperaturas")
+        plt.ylabel("Función de evaluación (distancia total)")
 
-    plt.xlabel("Temperaturas")
-    plt.ylabel("Función de evaluación (distancia total)")
     plt.show()

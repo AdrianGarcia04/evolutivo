@@ -12,6 +12,7 @@ class TSPLog:
         self.final_tmp = 0
         self.best_eval = 0
         self.time = 0
+        self.max_iters = 0
 
     def set_initial_temp(self, tmp):
         self.initial_tmp = tmp
@@ -27,6 +28,11 @@ class TSPLog:
 
     def set_time(self, time):
         self.time = time
+        return self
+
+    def set_max_iters(self, max_iters):
+        self.max_iters = max_iters
+        return self
 
     def add_dict(self, name):
         self.data[name] = ([], [])
@@ -60,7 +66,7 @@ class TSPLog:
     def show(self):
         plt.show()
 
-    def save(self, path, instance):
+    def save(self, path, instance, save_graphs):
         figs = [plt.figure(n) for n in plt.get_fignums()]
         i = 0
         for fig in figs:
@@ -70,9 +76,10 @@ class TSPLog:
             plt.grid(which='minor', color='#CCCCCC', linestyle=':')
             plt.minorticks_on()
             fig.set_size_inches((13, 7), forward=False)
-            fig.savefig("{}/{}-{}".format(path, name, date_time))
+            if save_graphs:
+                fig.savefig("{}/{}-{}".format(path, name, date_time))
             i += 1
 
         results = open(path + "/results.txt", "a")
-        results.write(f'{instance},{self.best_eval},{self.initial_tmp},{self.final_tmp},{self.time}\n')
+        results.write(f'{instance},{self.best_eval},{self.initial_tmp},{self.final_tmp},{self.time},{self.max_iters}\n')
         results.close()

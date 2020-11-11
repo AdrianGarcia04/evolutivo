@@ -44,7 +44,7 @@ class SimulatedAnnealing:
         best_solution = current_solution
 
         tmp = self.initial_tmp
-        self.log.set_initial_temp(tmp)
+        self.log.set_initial_temp(tmp).set_max_iters(self.max_iterations)
 
         while iterations < self.max_iterations:
             current_evaluation = current_solution.get_eval()

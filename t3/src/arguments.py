@@ -15,6 +15,9 @@ def defineArgs():
     parser.add_argument('-s', '--save', help='whether or not save the results',
         action='store_true')
 
+    parser.add_argument('-g', '--graphs', help='whether or not save the graphs',
+        action='store_true')
+
     parser.add_argument('-o', '--output', help='output file', type=str,
         default='results.txt')
 
