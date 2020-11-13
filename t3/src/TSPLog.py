@@ -2,11 +2,14 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 import numpy as np
+import os
+import re
 
 class TSPLog:
 
     def __init__(self):
         self.data = {}
+        self.simple_data = {}
         self.ids = []
         self.initial_tmp = 0
         self.final_tmp = 0
@@ -50,7 +53,7 @@ class TSPLog:
         l2.append(v2)
         return self
 
-    def gen_graphs(self, names, title="", xlabel="", ylabel="", id=""):
+    def gen_graphs(self, names, title="", xlabel="", ylabel="", labels=[], id=""):
         plt.figure(len(self.ids))
         plt.title(title, loc='left')
         plt.xlabel(xlabel)
@@ -59,6 +62,8 @@ class TSPLog:
         for name in names:
             (x, y) = self.data[name]
             plt.plot(x, y)
+        if labels:
+            plt.legend(labels, loc='upper right')
         self.ids.append(id)
 
         return self
@@ -82,4 +87,20 @@ class TSPLog:
 
         results = open(path + "/results.txt", "a")
         results.write(f'{instance},{self.best_eval},{self.initial_tmp},{self.final_tmp},{self.time},{self.max_iters}\n')
+        results.close()
+
+    def save_in(self, data_name, filename, ext, fstline):
+        filename_cp = filename
+        if os.path.exists(filename + ext):
+            cnt = 1
+            filename_cp = filename + f'-{cnt}'
+            while os.path.exists(filename_cp + ext):
+                m = re.search(filename, filename_cp)
+                filename_cp = m.group()
+                cnt += 1
+                filename_cp += f'-{cnt}'
+        results = open(filename_cp + ext, "w")
+        results.write(fstline)
+        for (v1, v2) in zip(self.data[data_name][0], self.data[data_name][1]):
+            results.write(f'{v1},{v2}\n')
         results.close()

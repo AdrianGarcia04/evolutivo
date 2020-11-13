@@ -39,6 +39,7 @@ def main(args):
         "title": "Función de evaluación " + args.file,
         "xlabel": "Número de iteraciones",
         "ylabel": "Función de evaluación",
+        "labels": ["Solución actual", "Mejor solución encontrada"],
         "id": "EvalFunctEvol"
     }
 
@@ -46,6 +47,7 @@ def main(args):
         "title": "Solución inicial vs solución actual " + args.file,
         "xlabel": "Número de iteraciones",
         "ylabel": "Diferencia",
+        "labels": [],
         "id": "SolInivsActSol"
     }
 
@@ -53,6 +55,7 @@ def main(args):
         "title": "Mejor solución vs solución actual " + args.file,
         "xlabel": "Número de iteraciones",
         "ylabel": "Diferencia",
+        "labels": [],
         "id": "BestSolvsActSol"
     }
 
@@ -62,5 +65,11 @@ def main(args):
 
     if args.save: log.save("../ejecuciones/" + args.file, args.file, args.graphs)
     else: log.show()
+
+    if args.save:
+        filename = "../ejecuciones/" + args.file + "/evalwithtemp" + str(args.temp)
+        ext = ".txt"
+        fstline = "Iteración,Función de evaluación\n"
+        log.save_in("eval-vs-iter", filename, ext, fstline)
 
 main(arguments.defineArgs())

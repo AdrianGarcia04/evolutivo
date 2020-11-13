@@ -65,7 +65,6 @@ class SimulatedAnnealing:
             # If we find a better solution, take it
             if random_neighbour_eval < current_evaluation:
                 current_solution = random_neighbour
-                self.log.add_data("eval-vs-iter", (iterations, random_neighbour_eval))
 
                 # If it is the best so far, save it
                 if random_neighbour_eval < best_evaluation:
@@ -80,11 +79,11 @@ class SimulatedAnnealing:
                 # Accepting
                 if probability < acceptance_probability:
                     current_solution = random_neighbour
-                    self.log.add_data("eval-vs-iter", (iterations, random_neighbour_eval))
 
             tmp = self.alpha(tmp)
             iterations += 1
             self.constants["k"] = iterations
+            self.log.add_data("eval-vs-iter", (iterations, random_neighbour_eval))
             self.log.add_data("act-vs-ini", (iterations, initial_eval - random_neighbour_eval))
             self.log.add_data("best-vs-act", (iterations, current_evaluation - best_evaluation))
             print("Percentage {}%".format(iterations * 100 // self.max_iterations), end="\r")
