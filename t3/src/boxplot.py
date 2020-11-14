@@ -38,5 +38,6 @@ if __name__ == '__main__':
         plt.xticks(ticks=poss, labels=keys)
         plt.xlabel("Temperaturas")
         plt.ylabel("Función de evaluación (distancia total)")
+        plt.title(f'Boxplot de la instancia {dir}', loc='left')
 
-    plt.show()
+        plt.savefig(f'../ejecuciones/{dir}/boxplot')

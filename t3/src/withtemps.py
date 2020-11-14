@@ -23,7 +23,8 @@ if __name__ == '__main__':
     data_extract = DataExtract(fields)
 
     current_execution = 1
-    for instance in instances:
+    for instance in instances: 
+        print("Current instance: ", instance)
         tmps = tmps_lists[instance]
         base_path = "../ejecuciones/" + instance + "/withtemps/"
         plt.figure(instance)
@@ -53,7 +54,7 @@ if __name__ == '__main__':
             plt.legend(loc='upper right')
 
             plt.xlabel("Iteraciones")
-            plt.ylabel("Función de evaluación (distancia total)")
+            plt.ylabel("Promedio de la función de evaluación")
             print("Percentage {}%".format(current_execution * 100 // executions), end="\r")
             current_execution += 1
 

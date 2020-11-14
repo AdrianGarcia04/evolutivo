@@ -1,0 +1,44 @@
+La carpeta se compone de distintos programas para obtener los resultados
+necesarios para la tarea.
+
+El primer programa, y el más importante, se encuentra en main.py,
+el cual permite ejecutar el recocido simulado con las instancias
+que se encuentran en la carpeta data/. El programa
+puede ser ejecutado con python3 main.py, y correrá con toda
+la información definida por defecto en el archivo arguments.py.
+Si se desea cambiar cualquier argumento del algoritmo, puede hacerse
+con las banderas indicadas, las cuales se describen al ejecutar
+python3 main.py --help.
+Si se especifica la bandera -s, se guardan los resultados de
+la ejecución en el archivo correspondiente results.txt, y si
+a esto se le añade la bandera -g, las gráficas se guardan en
+la carpeta correspondiente.
+Además, el algoritmo genera la información necesaria para
+las gráficas de temperatura, almacenando las ejecuciones en la
+carpeta correspondiente a cada instancia, en al subcarpeta withtemps.
+No se añadieron todos los archivos ni las gráficas para que el
+comprimido entregado no sea demasiado pesado.
+
+El archivo statistics.py permite obtener la información de la tabla
+de datos estadísticos requeridos para la tarea, desplegando en pantalla
+la información.
+
+El archivo boxplot.py permite leer la información de las ejecuciones
+de las instancias y generar los boxplots correspondientes a cada una,
+agrupandolos por temperaturas. Las gráficas generadas se guardan en
+la carpeta de resultados de la instancia.
+
+El archivo relative.py permite leer la información de
+las ejecuciones y mostrar el promedio de los errores relativos
+para cada temperatura en las ejecuciones de cada instancia, mostrando
+en pantalla dicha información.
+
+En general, los archivos main.py, boxplot.py, relative.py y statistics.py
+pueden ejecutarse con python3.
+
+El archivo script.sh solamente fue usado para facilitar la generación
+de información ejecutando muchas veces el archivo main.py con distintos
+parámetros.
+
+Los resultados se almacenan en las sub-carpetas correspondientes que se
+encuentran en la carpeta ejecuciones.

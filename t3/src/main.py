@@ -67,7 +67,7 @@ def main(args):
     else: log.show()
 
     if args.save:
-        filename = "../ejecuciones/" + args.file + "/evalwithtemp" + str(args.temp)
+        filename = "../ejecuciones/" + args.file + "/withtemps/evalwithtemp" + str(args.temp)
         ext = ".txt"
         fstline = "Iteración,Función de evaluación\n"
         log.save_in("eval-vs-iter", filename, ext, fstline)
