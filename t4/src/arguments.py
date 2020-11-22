@@ -7,6 +7,6 @@ def defineArgs():
         type=int, default=1000)
 
     parser.add_argument('-q', '--queens', help='number of queens', type=int,
-        default=4)
+        default=8)
 
     return parser.parse_args()
