@@ -4,7 +4,13 @@ from Logger import Logger
 from Genetics import Population
 
 def main(args):
-    population = Population(args.queens, args.maxiter)
+    popargs = {
+        "queens": args.queens,
+        "maxiters": args.maxiters,
+        "size": args.size,
+    }
+    population = Population(**popargs)
 
+    population.run()
 
 main(arguments.defineArgs())
