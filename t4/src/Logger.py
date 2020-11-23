@@ -11,22 +11,27 @@ class Logger:
         self.data = {}
         self.simple_data = {}
         self.ids = []
-        self.initial_tmp = 0
-        self.final_tmp = 0
-        self.best_eval = 0
+        self.pob_ini = 0
+        self.pob_fini = 0
+        self.best_fit = 0
+        self.prob_mut = 0
         self.time = 0
         self.max_iters = 0
 
-    def set_initial_temp(self, tmp):
-        self.initial_tmp = tmp
+    def set_mutation_prob(self, pob):
+        self.prob_mut = pob
         return self
 
-    def set_final_temp(self, tmp):
-        self.final_tmp = tmp
+    def set_initial_pob(self, pob):
+        self.pob_ini = pob
         return self
 
-    def set_best_eval(self, best):
-        self.best_eval = best
+    def set_final_pob(self, pob):
+        self.pob_fini = pob
+        return self
+
+    def set_best_fit(self, best):
+        self.best_fit = best
         return self
 
     def set_time(self, time):
@@ -71,7 +76,7 @@ class Logger:
     def show(self):
         plt.show()
 
-    def save(self, path, instance, save_graphs):
+    def save(self, path, queens, save_graphs):
         figs = [plt.figure(n) for n in plt.get_fignums()]
         i = 0
         for fig in figs:
@@ -85,8 +90,8 @@ class Logger:
                 fig.savefig("{}/{}-{}".format(path, name, date_time))
             i += 1
 
-        results = open(path + "/results.txt", "a")
-        results.write(f'{instance},{self.best_eval},{self.initial_tmp},{self.final_tmp},{self.time},{self.max_iters}\n')
+        results = open(path, "a")
+        results.write(f'{queens},{self.pob_ini},{self.pob_fini},{self.prob_mut},{self.best_fit},{self.time},{self.max_iters}\n')
         results.close()
 
     def save_in(self, data_name, filename, ext, fstline):

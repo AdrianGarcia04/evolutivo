@@ -17,11 +17,14 @@ def cross(f1, f2):
 
 class Population:
 
-    def __init__(self, queens=8, maxiters=100, size=10):
+    def __init__(self, queens=8, maxiters=100, size=10, mutation=0.3, cross=0.9, log=None):
         self.queens = queens
         self.max_iters = maxiters
         self.size = size
         self.population = [Member(queens) for _ in range(size)]
+        self.mutation_prob = mutation
+        self.cross_prob = cross
+        self.log = log
 
     def sort_population(self):
         self.population = sorted(self.population, key=lambda x: x.fitness)
@@ -37,10 +40,25 @@ class Population:
             new_members = self.gen_new_members(fathers)
             self.mutate(new_members)
             self.replace(new_members)
+            self.eval()
+            self.sort_population()
             i += 1
+
+            best_fit = self.population[0].fitness
+            self.log.add_data("iter-best", (i, best_fit))
+
+            fitness_avg = np.average([m.fitness for m in self.population])
+            self.log.add_data("iter-avg", (i, fitness_avg))
+
+            if best_fit == 0:
+                break
+
             print(f'Percentage {i * 100 // self.max_iters}%', end="\r")
-        self.eval()
-        self.sort_population()
+
+        final_pob_len = len(self.population)
+        best_fit = self.population[0].fitness
+
+        self.log.set_final_pob(final_pob_len).set_best_fit(best_fit).set_max_iters(i)
         print(self.population[0])
 
     def select_fathers(self):
@@ -49,7 +67,10 @@ class Population:
     def gen_new_members(self, fathers):
         new_members = []
         for f1, f2 in pairwise(fathers):
-            m1, m2 = cross(f1, f2)
+            if np.random.uniform() <= self.cross_prob:
+                m1, m2 = cross(f1, f2)
+            else:
+                m1, m2 = f1, f2
             new_members.append(m1)
             new_members.append(m2)
         m1, m2 = cross(fathers[-1], fathers[0])
@@ -59,7 +80,7 @@ class Population:
 
     def mutate(self, new_members):
         for member in new_members:
-            if np.random.uniform() <= 0.3:
+            if np.random.uniform() <= self.mutation_prob:
                 rand_index = np.random.randint(member.size)
                 member.gen[rand_index] = np.random.randint(member.size)
 

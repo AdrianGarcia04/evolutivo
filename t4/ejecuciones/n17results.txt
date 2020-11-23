@@ -1,0 +1,6 @@
+Reinas,Población inicial,Población final,Probabilidad de cruza,Probabilidad de mutación,Mejor fit,Tiempo de ejecución,Iteraciones
+17,51,51,0.5,0,1.7895255088806152,86
+17,51,51,0.5,0,14.642960548400879,733
+17,51,51,0.5,0,5.824836015701294,288
+17,51,51,0.5,1,20.086485385894775,1000
+17,51,51,0.5,1,20.4156551361084,1000
