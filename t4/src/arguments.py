@@ -10,6 +10,6 @@ def defineArgs():
         default=8)
 
     parser.add_argument('-s', '--size', help='population size', type=int,
-        default=10)
+        default=0)
 
     return parser.parse_args()

@@ -1,58 +1,18 @@
 import numpy as np
 from itertools import tee
+from Member import Member
 
 def pairwise(iterable):
     a, b = tee(iterable)
     next(b, None)
     return zip(a, b)
 
-def create_board(n):
-    return np.zeros((n, n), dtype=int)
-
-def fill_board(board, gen):
-    for (i, pos) in enumerate(gen):
-        board[pos][i] = 1
-    return board
-
-class Member:
-
-    def __init__(self, queens, gen=None):
-        self.size = queens
-        if gen is not None:
-            self.gen = gen
-        else:
-            self.gen = np.random.randint(queens, size=queens)
-        self.fitness = self.get_fitness()
-
-    def get_fitness(self):
-        hits = 0
-        board = fill_board(create_board(self.size), self.gen)
-        col = 0
-        for queen in self.gen:
-            try:
-                for i in range(col - 1, -1, -1):
-                    if board[queen][i] == 1:
-                        hits += 1
-            except IndexError:
-                pass
-            for i, j in zip(range(queen - 1, -1, -1), range(col - 1, -1, -1)):
-                if board[i][j] == 1:
-                    hits += 1
-            for i, j in zip(range(queen + 1, self.size, 1), range(col - 1, -1, -1)):
-                if board[i][j] == 1:
-                    hits += 1
-            col += 1
-        return hits
-
-    def __str__(self):
-        return f'Gen: {self.gen}, Fitness: {self.fitness}'
-
 def cross(f1, f2):
     cut_point = np.random.randint(f1.size)
     queens = f1.size
 
-    gen1 = list(f1.gen[0:cut_point]) + list(f2.gen[cut_point:])
-    gen2 = list(f2.gen[0:cut_point]) + list(f1.gen[cut_point:])
+    gen1 = list(f1.gen[:cut_point]) + list(f2.gen[cut_point:])
+    gen2 = list(f2.gen[:cut_point]) + list(f1.gen[cut_point:])
     return (Member(queens, gen=gen1), Member(queens, gen=gen2))
 
 class Population:
@@ -63,6 +23,13 @@ class Population:
         self.size = size
         self.population = [Member(queens) for _ in range(size)]
 
+    def sort_population(self):
+        self.population = sorted(self.population, key=lambda x: x.fitness)
+
+    def eval(self):
+        for member in self.population:
+            member.update_fitness()
+
     def run(self):
         i = 0
         while i < self.max_iters:
@@ -71,8 +38,9 @@ class Population:
             self.mutate(new_members)
             self.replace(new_members)
             i += 1
-            print("Percentage {}%".format(i * 100 // self.max_iters), end="\r")
-        self.population = sorted(self.population, key=lambda x: x.fitness)
+            print(f'Percentage {i * 100 // self.max_iters}%', end="\r")
+        self.eval()
+        self.sort_population()
         print(self.population[0])
 
     def select_fathers(self):
@@ -96,9 +64,10 @@ class Population:
                 member.gen[rand_index] = np.random.randint(member.size)
 
     def replace(self, new_members):
-        self.population = sorted(self.population, key=lambda x: x.fitness)
+        self.sort_population()
         new_pop = [self.population[0]]
         new_pop += new_members
+        self.population = new_pop
 
     def tournament(self, select, num_contestants=2):
         fathers = []
@@ -107,3 +76,17 @@ class Population:
             contestants = sorted(contestants, key=lambda x: x.fitness)
             fathers.append(contestants[0])
         return fathers
+
+    def as_latex(self):
+        self.sort_population()
+        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+        'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        q = self.queens
+        fen_pos = ""
+
+        for (i, pos) in enumerate(self.population[0].gen):
+            fen_pos += f'Q{letters[i]}{q - pos},'
+        fen_pos = fen_pos[:-1]
+        maxfield = f'{letters[q - 1]}{q}'
+        print(f'\\storechessboardstyle{{{q}x{q}}}{{maxfield={maxfield}}}')
+        print(f'\\chessboard[style={q}x{q},setwhite={{{fen_pos}}},showmover=false]')
