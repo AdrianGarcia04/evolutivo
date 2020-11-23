@@ -19,7 +19,7 @@ def main(args):
         "log": log,
     }
 
-    log.set_initial_pob(popargs["size"]).set_mutation_prob(args.mutation)
+    log.set_initial_pob(popargs["size"]).set_cross_prob(args.cross).set_mutation_prob(args.mutation)
 
     t1 = time.time()
     population = Population(**popargs)

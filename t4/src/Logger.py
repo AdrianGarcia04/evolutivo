@@ -14,12 +14,17 @@ class Logger:
         self.pob_ini = 0
         self.pob_fini = 0
         self.best_fit = 0
+        self.prob_cross = 0
         self.prob_mut = 0
         self.time = 0
         self.max_iters = 0
 
-    def set_mutation_prob(self, pob):
-        self.prob_mut = pob
+    def set_mutation_prob(self, prob):
+        self.prob_mut = prob
+        return self
+
+    def set_cross_prob(self, prob):
+        self.prob_cross = prob
         return self
 
     def set_initial_pob(self, pob):
@@ -91,7 +96,7 @@ class Logger:
             i += 1
 
         results = open(path, "a")
-        results.write(f'{queens},{self.pob_ini},{self.pob_fini},{self.prob_mut},{self.best_fit},{self.time},{self.max_iters}\n')
+        results.write(f'{queens},{self.pob_ini},{self.pob_fini},{self.prob_cross},{self.prob_mut},{self.best_fit},{self.time},{self.max_iters}\n')
         results.close()
 
     def save_in(self, data_name, filename, ext, fstline):
