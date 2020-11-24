@@ -27,4 +27,7 @@ def defineArgs():
     parser.add_argument('-l', '--latex', help='print latex codification',
         action='store_true')
 
+    parser.add_argument('-b', '--best', help='graph b bests', type=int,
+        default=3)
+
     return parser.parse_args()

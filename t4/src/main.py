@@ -8,7 +8,8 @@ from Member import Member
 def main(args):
     # Create Log
     log = Logger()
-    log.add_dictionaries(["iter-best", "iter-avg"])
+    best_list = [f'iter-best{i}' for i in range(args.best)] + ["best-avg"]
+    log.add_dictionaries(best_list + ["iter-avg", "iter-best"])
 
     popargs = {
         "queens": args.queens,
@@ -28,12 +29,14 @@ def main(args):
     log.set_time(t2 - t1)
 
     # Define graphs data
+    aux_labels = ["Segunda", "Tercera", "Cuarta", "Quinta", "Sexta", "Séptima"]
+    best_list_labels = ["Mejor solución"] + [f'{aux_labels[j]} mejor solución' for j in range(args.best - 1)]
     f1args = {
         "title": "Comportamiento del algoritmo para N = " + str(args.queens),
         "xlabel": "Número de iteraciones",
         "ylabel": "Función fitness",
-        "labels": [],
-        "id": "EvalFunctEvol"
+        "labels": best_list_labels + ["Promedio"],
+        "id": "EvalFunctEvolM"
     }
 
     f2args = {
@@ -44,7 +47,17 @@ def main(args):
         "id": "AvgEvol"
     }
 
-    log.gen_graphs(["iter-best"], **f1args).gen_graphs(["iter-avg"], **f2args)
+    f3args = {
+        "title": "Comportamiento del algoritmo para N = " + str(args.queens),
+        "xlabel": "Número de iteraciones",
+        "ylabel": "Función fitness",
+        "labels": [],
+        "id": "EvalFunctEvol"
+    }
+
+    log.gen_graphs(best_list, **f1args) \
+    .gen_graphs(["iter-avg"], **f2args) \
+    .gen_graphs(["iter-best"], **f3args)
 
     if args.save: log.save(f'../ejecuciones/n{args.queens}results.txt', args.queens, args.graphs)
     else: log.show()

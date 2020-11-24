@@ -17,7 +17,7 @@ def cross(f1, f2):
 
 class Population:
 
-    def __init__(self, queens=8, maxiters=100, size=10, mutation=0.3, cross=0.9, log=None):
+    def __init__(self, queens=8, maxiters=100, size=10, mutation=0.3, cross=0.9, log=None, log_best=3):
         self.queens = queens
         self.max_iters = maxiters
         self.size = size
@@ -25,6 +25,7 @@ class Population:
         self.mutation_prob = mutation
         self.cross_prob = cross
         self.log = log
+        self.log_best = log_best
 
     def sort_population(self):
         self.population = sorted(self.population, key=lambda x: x.fitness)
@@ -44,8 +45,14 @@ class Population:
             self.sort_population()
             i += 1
 
-            best_fit = self.population[0].fitness
-            self.log.add_data("iter-best", (i, best_fit))
+            self.log.add_data("iter-best", (i, self.population[0].fitness))
+            best_list = []
+            for j in range(self.log_best):
+                best_fit = self.population[j].fitness
+                self.log.add_data(f'iter-best{j}', (i, best_fit))
+                best_list.append(best_fit)
+
+            self.log.add_data("best-avg", (i, np.average(best_list)))
 
             fitness_avg = np.average([m.fitness for m in self.population])
             self.log.add_data("iter-avg", (i, fitness_avg))
