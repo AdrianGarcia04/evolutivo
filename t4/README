@@ -1,0 +1,24 @@
+La carpeta se compone de diferentes archivos para obtener
+los resultados necesarios para la tarea.
+
+El programa principal se encuentra en el archivo main.py, en
+el cual se hacen las definiciones necesarias para crear las gráficas
+y datos relacionados a ellas, así como se incializan las variables
+y estructuras necesarias para correr el algoritmo genético.
+El programa se ejecuta con python3 main.py, y correrá con toda
+la información definida por defecto en el archivo arguments.py.
+Si se desea cambiar cualquier argumento del algoritmo, puede hacerse
+con las banderas indicadas, las cuales se describen al ejecutar
+python3 main.py --help.
+
+El archivo statistics.py permite obtener la información de la tabla
+de datos estadísticos requeridos para la tarea, desplegando en pantalla
+la información.
+
+El archivo script.sh solamente fue usado para facilitar la generación
+de información ejecutando muchas veces el archivo main.py con distintos
+parámetros.
+
+Los resultados se almacenan en la carpeta ejecuciones, guardando
+información que representa a cada ejecución del algoritmo con diferentes
+valores como argumentos.

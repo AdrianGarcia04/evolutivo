@@ -1,7 +1,7 @@
 import argparse
 
 def defineArgs():
-    parser = argparse.ArgumentParser(description='Simulated Annealing')
+    parser = argparse.ArgumentParser(description='8-Queens Problem')
 
     parser.add_argument('-m', '--maxiters', help='number of max iterations',
         type=int, default=1000)
