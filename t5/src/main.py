@@ -11,17 +11,15 @@ def main(args):
 
     # Initial population
     instance.init()
-    print(np.matrix(instance.population))
 
     # Repeat
     # for _ in range(args.maxiters):
 
     # Calculate frequencies
     instance.frequencies()
-    print(instance.frequencies, end='\n\n')
 
     # Calculate joint frecuencies
-    instance.joint_frecuencies()
+    instance.joint_frequencies()
 
     # Calculate mutual information
 

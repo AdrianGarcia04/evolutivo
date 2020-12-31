@@ -35,18 +35,6 @@ class Instance:
         for _ in range(self.pop_size):
             self.population.append(list(np.random.randint(2, size=self.num_items)))
 
-        self.population = [
-            [1,1,0,1,0],
-            [0,1,0,1,0],
-            [0,1,0,0,0],
-            [1,0,0,1,0],
-            [0,0,1,0,1],
-            [0,1,0,0,1],
-            [1,0,1,1,0],
-            [0,0,0,1,1],
-            [0,0,1,1,0],
-            [0,0,0,1,1]]
-
     def frequencies(self):
         self.frequencies = []
         for i in range(self.num_items):
@@ -55,7 +43,7 @@ class Instance:
                 count += 1 if ind[i] else 0
             self.frequencies.append(count / self.pop_size)
 
-    def joint_frecuencies(self):
+    def joint_frequencies(self):
         (rows, cols) = (self.num_items, self.num_items)
         joint_freq_true_true = np.zeros((rows, cols))
         joint_freq_false_false = np.zeros((rows, cols))
@@ -78,20 +66,6 @@ class Instance:
 
                     joint_freq_true_false[i][j] = self.count((i, 1), (j, 0))
                     joint_freq_false_true[i][j] = self.count((i, 0), (j, 1))
-
-        print(joint_freq_true_true, end='\n\n')
-        print(joint_freq_false_false, end='\n\n')
-
-        print(joint_freq_true_false, end='\n\n')
-        print(joint_freq_false_true, end='\n\n')
-
-        for i in range(cols):
-            for j in range(rows):
-                print(f'x{i + 1} = 1, x{j + 1} = 1 ---- {joint_freq_true_true[i][j]}')
-                print(f'x{i + 1} = 0, x{j + 1} = 0 ---- {joint_freq_false_false[i][j]}')
-
-                print(f'x{i + 1} = 1, x{j + 1} = 0 ---- {joint_freq_true_false[i][j]}')
-                print(f'x{i + 1} = 0, x{j + 1} = 1 ---- {joint_freq_false_true[i][j]}')
 
     def count(self, i_val, j_val):
         (i, bool_i) = i_val
