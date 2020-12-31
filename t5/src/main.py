@@ -22,6 +22,7 @@ def main(args):
     instance.joint_frequencies()
 
     # Calculate mutual information
+    instance.mutual_info()
 
     # Create chain model
 
