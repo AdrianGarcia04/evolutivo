@@ -13,20 +13,21 @@ def main(args):
     instance.init()
 
     # Repeat
-    # for _ in range(args.maxiters):
+    for _ in range(args.maxiters):
 
-    # Calculate frequencies
-    instance.frequencies()
+        # Calculate frequencies
+        instance.calc_frequencies()
 
-    # Calculate joint frecuencies
-    instance.joint_frequencies()
+        # Calculate joint frecuencies
+        instance.calc_joint_frequencies()
 
-    # Calculate mutual information
-    instance.mutual_info()
+        # Calculate mutual information
+        instance.mutual_info()
 
-    # Create chain model
-    instance.chain_model()
+        # Create chain model
+        instance.calc_chain_model()
 
-    # Sampling
+        # Sampling
+        instance.sampling()
 
 main(arguments.defineArgs())
