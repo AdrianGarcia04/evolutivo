@@ -285,18 +285,28 @@ class Instance:
             new_population.append(ind)
 
         pop_fitness = []
+        best = None
+        best_fitness = 0
 
         for ind in new_population:
-            pop_fitness.append(self.fitness(ind))
+            fitness = self.fitness(ind)
+            pop_fitness.append(fitness)
+            if fitness > best_fitness:
+                best = ind
 
         avg = np.average(pop_fitness)
+        print(new_population)
+        print(pop_fitness)
+        print(avg)
 
-        self.population = []
+        self.population = [best]
+        print(f'BEST {best} con {self.fitness(best)}')
+        new_population.remove(best)
 
         for i, ind in enumerate(new_population):
 
-            if pop_fitness[i] > avg:
-                print("here")
+            if pop_fitness[i] >= avg:
+                print(f'pasa {ind} con {pop_fitness[i]}')
                 self.population.append(ind)
 
     def fitness(self, ind):
