@@ -25,6 +25,7 @@ def main(args):
     instance.mutual_info()
 
     # Create chain model
+    instance.chain_model()
 
     # Sampling
 

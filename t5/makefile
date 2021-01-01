@@ -1,6 +1,6 @@
 SRC_DIR = src
 DATA_DIR = data
-FILE = 4_11
+FILE = 5_80
 MAX_ITERS = 100
 SIZE = 10
 

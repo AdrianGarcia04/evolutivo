@@ -132,3 +132,48 @@ class Instance:
                     mutual_table[j][i] = p1 + p2 + p3 + p4
 
         self.mutual_table = mutual_table
+
+    def chain_model(self):
+        used_vars = 0
+        rng_items = range(self.num_items)
+
+        (max_i, max_j, max_mutual) = self.get_max_mutual(rng_items, rng_items)
+        chain_model = [max_i, max_j]
+
+        self.mutual_table[max_i][max_j] = 0
+        self.mutual_table[max_j][max_i] = 0
+        used_vars += 2
+
+        while used_vars < self.num_items:
+            fst = chain_model[0]
+            lst = chain_model[-1]
+
+            (fst_max_i, fst_max_j, fst_max_mutual) = self.get_max_mutual(rng_items, [fst])
+            (lst_max_i, lst_max_j, lst_max_mutual) = self.get_max_mutual([lst], rng_items)
+
+            
+            if max(fst_max_mutual, lst_max_mutual) == fst_max_mutual:
+                chain_model.insert(0, fst_max_i)
+                self.mutual_table[fst_max_i][fst_max_j] = 0
+                self.mutual_table[fst_max_j][fst_max_i] = 0
+            else:
+                chain_model.append(lst_max_j)
+                self.mutual_table[lst_max_i][lst_max_j] = 0
+                self.mutual_table[lst_max_j][lst_max_i] = 0
+            
+            used_vars += 1
+
+    def get_max_mutual(self, i_range, j_range):
+        max_mutual = max_i = max_j = 0
+        for i in i_range:
+            for j in j_range:
+                if self.mutual_table[i][j] > max_mutual:
+                    max_mutual = self.mutual_table[i][j]
+                    max_i = i
+                    max_j = j
+
+        return (max_i, max_j, max_mutual)
+
+
+
+
