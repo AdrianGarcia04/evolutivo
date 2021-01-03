@@ -1,6 +1,7 @@
 import sys
 import arguments
 import numpy as np
+import time
 from Instance import Instance
 
 def main(args):
@@ -8,6 +9,8 @@ def main(args):
     kwargs = {"maxiters": args.maxiters, "pop_size": args.size}
     file = "./data/" + args.file
     instance = Instance.from_file(file, **kwargs)
+
+    t1 = time.time()
 
     # Initial population
     instance.init()
@@ -29,5 +32,11 @@ def main(args):
 
         # Sampling
         instance.sampling()
+
+    t2 = time.time()
+
+    ex_time = (t2 - t1) * 1000.0
+
+    print(instance.best, instance.fitness(instance.best), f'{ex_time}s')
 
 main(arguments.defineArgs())

@@ -9,7 +9,7 @@ def defineArgs():
     parser.add_argument('-m', '--maxiters', help='number of max iterations',
         type=int, default=1000)
 
-    parser.add_argument('-s', '--size', help='population size', type=int,
-        default=10)
+    parser.add_argument('-s', '--size', help='population size',
+        type=int, default=100)
 
     return parser.parse_args()

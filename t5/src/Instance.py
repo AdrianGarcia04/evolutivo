@@ -12,8 +12,10 @@ class Instance:
         self.maxiters = maxiters
         self.pop_size = pop_size
         self.population = []
+        self.best = None
 
     def from_file(file, maxiters=0, pop_size=0):
+        remove_last = True if "large" in file else False
 
         file = open(file, "r")
         (num_items, wmax) = file.readline().strip().split(' ')
@@ -22,6 +24,9 @@ class Instance:
 
         for line in file:
             items.append(line.strip().split(' '))
+
+        if remove_last:
+            items = items[:-1]
 
         kwargs = {
             "name" : file,
@@ -42,13 +47,13 @@ class Instance:
     def calc_frequencies(self):
 
         self.frequencies = []
+        self.pop_size = len(self.population)
 
         for i in range(self.num_items):
 
             count = 0
 
             for ind in self.population:
-
                 count += 1 if ind[i] else 0
 
             self.frequencies.append(count / self.pop_size)
@@ -123,11 +128,6 @@ class Instance:
                     j_true = self.frequencies[j]
                     j_false = 1 - self.frequencies[j]
 
-                    #l1 = false_false / (i_false * j_false)
-                    #l2 = false_true / (i_false * j_true)
-                    #l3 = true_false / (i_true * j_false)
-                    #l4 = true_true / (i_true * j_true)
-
                     if (i_false * j_false) == 0:
                         l1 = 0
                     else: 
@@ -177,40 +177,42 @@ class Instance:
 
     def calc_chain_model(self):
 
-        used_vars = 0
         rng_items = range(self.num_items)
 
         (max_i, max_j, max_mutual) = self.get_max_mutual(rng_items, rng_items)
         chain_model = [max_i, max_j]
+        chain_model = list(set(chain_model))
 
-        self.mutual_table[max_i][max_j] = 0
-        self.mutual_table[max_j][max_i] = 0
-        used_vars += 2
 
-        while used_vars < self.num_items:
+        while len(chain_model) != self.num_items:
 
             fst = chain_model[0]
             lst = chain_model[-1]
+            mejor_izq_i = mejor_der_i = -1
+            mejor_izq_v = mejor_der_v = -1
+            diff = self.list_diff(chain_model, list(rng_items))
 
-            (fst_max_i, fst_max_j, fst_max_mutual) = self.get_max_mutual(rng_items, [fst])
-            (lst_max_i, lst_max_j, lst_max_mutual) = self.get_max_mutual([lst], rng_items)
+            for xi in diff:
 
-            
-            if max(fst_max_mutual, lst_max_mutual) == fst_max_mutual:
+                if self.mutual_table[xi][fst] > mejor_izq_v:
+                    mejor_izq_i = xi
+                    mejor_izq_v = self.mutual_table[xi][fst]
 
-                chain_model.insert(0, fst_max_i)
-                self.mutual_table[fst_max_i][fst_max_j] = 0
-                self.mutual_table[fst_max_j][fst_max_i] = 0
+                if self.mutual_table[lst][xi] > mejor_der_v:
+                    mejor_der_i = xi
+                    mejor_der_v = self.mutual_table[lst][xi]
 
+
+            if max(mejor_izq_v, mejor_der_v) == mejor_izq_v:
+                chain_model.insert(0, mejor_izq_i)
             else:
+                chain_model.append(mejor_der_i)
 
-                chain_model.append(lst_max_j)
-                self.mutual_table[lst_max_i][lst_max_j] = 0
-                self.mutual_table[lst_max_j][lst_max_i] = 0
-            
-            used_vars += 1
 
         self.chain_model = chain_model
+
+    def list_diff(self, l1, l2):
+        return (list(list(set(l1)-set(l2)) + list(set(l2)-set(l1))))
 
     def get_max_mutual(self, i_range, j_range):
 
@@ -261,7 +263,7 @@ class Instance:
 
         new_population = []
 
-        for _ in range(10):
+        for _ in range(self.pop_size):
 
             ind = [0] * self.num_items
             prev_res = None
@@ -291,22 +293,20 @@ class Instance:
         for ind in new_population:
             fitness = self.fitness(ind)
             pop_fitness.append(fitness)
-            if fitness > best_fitness:
+            if fitness >= best_fitness:
                 best = ind
 
         avg = np.average(pop_fitness)
-        print(new_population)
-        print(pop_fitness)
-        print(avg)
 
         self.population = [best]
-        print(f'BEST {best} con {self.fitness(best)}')
+        if self.best == None or self.fitness(self.best) < self.fitness(best):
+            self.best = best
+
         new_population.remove(best)
 
         for i, ind in enumerate(new_population):
 
             if pop_fitness[i] >= avg:
-                print(f'pasa {ind} con {pop_fitness[i]}')
                 self.population.append(ind)
 
     def fitness(self, ind):
