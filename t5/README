@@ -1,0 +1,19 @@
+El programa se puede ejecutar simplemente con el comando
+"make", el cual ejecutará las instrucciones por default
+para una instancia dentro de la carpeta data.
+
+Los argumentos del programa se pueden modificar
+en el archivo makefile o como argumentos
+en la línea de comandos al usar "make", por ejemplo:
+
+
+	make FILE=low/10_269 SIZE=1000 MAX_ITERS=1000
+
+ejecuta el programa tomando como entrada el archivo con
+la instancia 10_269, usa una población de tamaño 1000
+y pone un límite de ejecuciones del algoritmo
+igual a 1000.
+
+Después de la ejecución, en pantalla se muestra
+a la mejor solución encontrada así como su valor
+fitness y el tiempo de ejecución que tomó.
