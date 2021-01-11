@@ -13,4 +13,7 @@ def main(args):
     }
     instance = Instance(**kwargs)
 
+    for i in range(instance.maxiters):
+        v_i = instance.generate_test_vect(i)
+
 main(arguments.defineArgs())

@@ -4,7 +4,7 @@ def defineArgs():
     parser = argparse.ArgumentParser(description='Knapsack problem')
 
     parser.add_argument('-f', '--function', help='function to use', type=str,
-        default='sphere', choices=['sphere', 'ackley', 'griewank', 'rastrigin', 'rosenbrock'])
+        default='sphere', choices=['sphere', 'ackley', 'griewank', 'tenth', 'rastrigin', 'rosenbrock'])
 
     parser.add_argument('-m', '--maxiters', help='number of max iterations',
         type=int, default=10000)

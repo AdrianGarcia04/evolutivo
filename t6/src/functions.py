@@ -1,5 +1,4 @@
 import numpy as np
-import time
 
 def sphere(xx):
     # x in [-5.12, 5.12]
@@ -53,26 +52,20 @@ def rosenbrock(xx):
         sum = sum + (100 * (xx[i + 1] - xx[i]**2)**2 + (1 - xx[i])**2)
     return sum
 
-def eval_funct(xx, funct, with_time=False):
-    if with_time:
-        t1 = time.time()
+functs = {
+    "sphere": sphere,
+    "ackley": ackley,
+    "griewank": griewank,
+    "tenth": tenth_power_function,
+    "rastrigin": rastrigin,
+    "rosenbrock": rosenbrock
+}
 
-    if funct == 'Sphere':
-        fx = sphere(xx)
-    elif funct == 'Ackley':
-        fx = ackley(xx)
-    elif funct == 'Griewank':
-        fx = griewank(xx)
-    elif funct == 'TenthPower':
-        fx = tenth_power_function(xx)
-    elif funct == 'Rastrigin':
-        fx = rastrigin(xx)
-    elif funct == 'Rosenbrock':
-        fx = rosenbrock(xx)
-
-    ex_time = None
-    if with_time:
-        t2 = time.time()
-        ex_time = (t2 - t1) * 1000.0
-
-    return (fx, ex_time)
+ranges = {
+    "sphere": 5.12,
+    "ackley": 30,
+    "griewank": 600,
+    "tenth": 5.12,
+    "rastrigin": 5.12,
+    "rosenbrock": 2.048
+}
