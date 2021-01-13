@@ -6,7 +6,7 @@ def defineArgs():
     parser.add_argument('-f', '--function', help='function to use', type=str,
         default='sphere', choices=['sphere', 'ackley', 'griewank', 'tenth', 'rastrigin', 'rosenbrock'])
 
-    parser.add_argument('-m', '--maxiters', help='number of max iterations',
+    parser.add_argument('-m', '--maxevals', help='number of max iterations',
         type=int, default=10000)
 
     parser.add_argument('-s', '--size', help='population size',

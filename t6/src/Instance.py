@@ -4,9 +4,10 @@ from functions import *
 
 class Instance:
 
-    def __init__(self, funct="", maxiters=0, size=0, cross=0.0, scale=0.0, dim=0):
+    def __init__(self, funct="", maxevals=0, size=0, cross=0.0, scale=0.0, dim=0):
         self.functName = funct
-        self.maxiters = maxiters * dim
+        self.maxevals = maxevals * dim
+        self.num_evals = 0
         self.size = size
         self.cross = cross
         self.scale = scale
@@ -14,6 +15,13 @@ class Instance:
         self.ranges = ranges[funct]
         self.eval = functs[funct]
         self.population = np.random.uniform(low=-self.ranges, high=self.ranges, size=(size, dim))
+
+    def not_term(self):
+        return (self.num_evals < self.maxevals)
+
+    def eval_ind(self, ind):
+        self.num_evals += 1
+        return self.eval(ind)
 
     def gen_mut_vect(self, i):
 
@@ -25,7 +33,15 @@ class Instance:
         (x_1, x_2, x_3) = (self.population[r_1], self.population[r_2], self.population[r_3])
 
         diff = self.scale * (x_2 - x_3)
-        return x_1 + diff
+        return self.repair(x_1 + diff, x_1)
+
+    def repair(self, child, base):
+        for j in range(self.dim):
+            if child[j] < -self.ranges:
+                child[j] = base[j] + np.random.rand() * (-self.ranges - base[j])
+            if child[j] > self.ranges:
+                child[j] = base[j] + np.random.rand() * (self.ranges - base[j])
+        return child
 
     def gen_test_vec(self, v_i, x_i):
 
