@@ -1,0 +1,17 @@
+El programa puede ejecutarse utilizando las
+reglas definidas en el archivo makefile.
+
+Puede ejecutarse el algoritmo con los parámetros
+por defecto utilizando el comando "make" o 
+"make run", el cual mostrará el resultado
+del algoritmo con el mejor individuo que encontró
+para la función.
+
+Los parámetros pueden modificarse directamente
+en el archivo makefile o especificarse 
+en la línea de comandos como "make FUNCT=ackley".
+
+Finalmente, para observar los resultados de las tablas
+mostradas en el reporte, el comando "make stats"
+muestra en pantalla los promedios y los tiempos
+de ejecución de las tablas.

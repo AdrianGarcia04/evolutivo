@@ -33,3 +33,6 @@ rosenbrock:
 
 save:
 	@python3 ./$(SRC_DIR)/main.py -f $(FUNCT) -m $(MAX_EVALS) -s $(SIZE) -cr $(CROSS) -sc $(SCALE) -d $(DIM) >> $(RES_DIR)/$(RES_FILE)
+
+stats:
+	@python3 ./$(SRC_DIR)/statistics.py ./$(RES_DIR)/results.txt
