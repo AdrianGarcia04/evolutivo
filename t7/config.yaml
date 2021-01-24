@@ -1,0 +1,18 @@
+functs:
+  using: 'sphere'
+  sphere:
+    range: 5.12
+  ackley:
+    range: 30
+  griewank:
+    range: 600
+  tenth:
+    range: 5.12
+  rastrigin:
+    range: 5.12
+  rosenbrock:
+    range: 2.048
+
+maxevals: 10000
+size: 100
+dim: 10
