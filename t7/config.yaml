@@ -1,22 +1,22 @@
 functions:
-  using: 'ackley'
-  sphere:
-    bound: 5.12
-  ackley:
-    bound: 30
-  griewank:
-    bound: 600
-  tenth:
-    bound: 5.12
-  rastrigin:
-    bound: 5.12
-  rosenbrock:
-    bound: 2.048
+  using: 'c'
+  cosin:
+    blo: -1.5
+    bup: 5
+  a:
+    blo: 0
+    bup: 5
+  b:
+    blo: 0
+    bup: 20
+  c:
+    blo: 1
+    bup: 5
 
-maxevals: 1000
-size: 10
+maxevals: 50
+size: 200
 dim: 2
-omega: 0.7
-phip: 0.5
-phig: 0.5
-lr: 0.4
+omega: 0.9
+phip: 0.4
+phig: 0.7
+lr: 0.2
