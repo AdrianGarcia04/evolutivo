@@ -16,7 +16,8 @@ functions:
 maxevals: 50
 size: 200
 dim: 2
-omega: 0.9
-phip: 0.4
-phig: 0.7
+omega: 0.6
+phip: 0.8
+phig: 0.3
 lr: 0.2
+nBest: 3
