@@ -52,7 +52,7 @@ def rosenbrock(xx):
         sum = sum + (100 * (xx[i + 1] - xx[i]**2)**2 + (1 - xx[i])**2)
     return sum
 
-functs = {
+fncts = {
     "sphere": sphere,
     "ackley": ackley,
     "griewank": griewank,

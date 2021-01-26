@@ -1,18 +1,22 @@
-functs:
-  using: 'sphere'
+functions:
+  using: 'ackley'
   sphere:
-    range: 5.12
+    bound: 5.12
   ackley:
-    range: 30
+    bound: 30
   griewank:
-    range: 600
+    bound: 600
   tenth:
-    range: 5.12
+    bound: 5.12
   rastrigin:
-    range: 5.12
+    bound: 5.12
   rosenbrock:
-    range: 2.048
+    bound: 2.048
 
-maxevals: 10000
-size: 100
-dim: 10
+maxevals: 1000
+size: 10
+dim: 2
+omega: 0.7
+phip: 0.5
+phig: 0.5
+lr: 0.4
