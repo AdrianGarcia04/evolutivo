@@ -1,5 +1,8 @@
 import numpy as np
 
+def sphere(x, y):
+    return np.sum(x**2 + y**2)
+
 def cosin(x, y):
     return np.cos(x) * np.sin(y)
 
@@ -13,6 +16,7 @@ def c(x, y):
     return np.cos(np.sqrt(x ** 3)) + np.sin(np.sqrt(y ** 3))
 
 fncts = {
+    "sphere": sphere,
     "cosin": cosin,
     "a": a,
     "b": b,

@@ -16,4 +16,6 @@ def savefig(i, blo, bup, fnct, swarm):
         plt.annotate("x", particle.position)
 
     plt.savefig('./figs/{:02}.png'.format(i))
+    plt.savefig('./figs/{:02}.png'.format(i + 1))
+    plt.savefig('./figs/{:02}.png'.format(i + 2))
     plt.clf()

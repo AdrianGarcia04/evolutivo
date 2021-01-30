@@ -12,17 +12,17 @@ fnct = fncts[fnctName]
 blo = cfg['functions'][fnctName]['blo']
 bup = cfg['functions'][fnctName]['bup']
 
-maxevals = cfg['maxevals']
-size = cfg['size']
-dim = cfg['dim']
-omega = cfg['omega']
-phip = cfg['phip']
-phig = cfg['phig']
-lr = cfg['lr']
-save = int(sys.argv[3]) if sys.argv[3] else False
-data = int(sys.argv[4]) if sys.argv[4] else False
-gif = int(sys.argv[5]) if sys.argv[5] else False
-nBest = cfg['nBest']
+maxevals = int(sys.argv[3]) if sys.argv[3] else cfg['maxevals']
+size = int(sys.argv[4]) if sys.argv[4] else cfg['size']
+dim = int(sys.argv[5]) if sys.argv[5] else cfg['dim']
+omega = float(sys.argv[6]) if sys.argv[6] else cfg['omega']
+phip = float(sys.argv[7]) if sys.argv[7] else cfg['phip']
+phig = float(sys.argv[8]) if sys.argv[8] else cfg['phig']
+lr = float(sys.argv[9]) if sys.argv[9] else cfg['lr']
+nBest = int(sys.argv[10]) if sys.argv[10] else cfg['nBest']
+save = int(sys.argv[11]) if sys.argv[11] else False
+data = int(sys.argv[12]) if sys.argv[12] else False
+gif = int(sys.argv[13]) if sys.argv[13] else False
 
 log = Logger()
 
@@ -42,9 +42,10 @@ g1Args = {
 
 
 t1 = time.time()
-pso(fnct, blo, bup, maxevals, size, dim, omega, phip, phig, lr, gif, data, log, nBest)
+best = pso(fnct, blo, bup, maxevals, size, dim, omega, phip, phig, lr, gif, data, log, nBest)
 t2 = time.time()
 
-log.simpleData = [fnctName, float(blo), float(bup), maxevals, size, dim, omega, phip, phig, lr, t2 - t1]
+log.simpleData = [fnctName, float(blo), float(bup), maxevals, size, dim, omega, phip, phig, lr, t2 - t1, best]
 log.gen_graphs(best_list, **g1Args)
-log.save(f'./ejecuciones', save, data)
+if save or data:
+    log.save(f'./ejecuciones', save, data)

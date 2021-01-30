@@ -42,9 +42,9 @@ def pso(fnct, blo, bup, maxevals, size, dim, omega, phip, phig, lr, gif, data, l
                 log.add_data(f'iter-best{b}', (eval, nBestList[b]))
 
             log.add_data('iter-avg', (eval, avgFitness))
-
         if gif:
             plot.savefig(eval, blo, bup, fnct, swarm)
+    return fnct(swarmBest[0], swarmBest[1])
 
 def sortByFitness(swarm):
     sorted = [p.fitnessVal for p in swarm]
