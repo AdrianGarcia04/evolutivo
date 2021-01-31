@@ -1,4 +1,4 @@
-FUNCT = c
+FUNCT = sphere
 OUT ?= $(FUNCT)
 MAXEVALS = 30
 SIZE = 50
@@ -26,7 +26,7 @@ gif:
 	@ffmpeg -y -i ./figs/%02d.png ./figs/$(OUT).gif
 	@rm figs/*.png
 	@echo "Gif ${FUNCT}.gif created!"
-	# @xdg-open ./figs/${FUNCT}.gif
+	@xdg-open ./figs/${FUNCT}.gif
 
 datagif:
 	@python3 ./src/main.py ./config.yaml $(FUNCT) $(MAXEVALS) $(SIZE) $(DIM) $(OMEGA) $(PHIP) $(PHIG) $(LR) $(NBEST) 0 1 1
